@@ -1,0 +1,85 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.main{
+    align-items: center;
+    background-color: rgb(33 26 49);
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    display: flex;
+}
+.container{
+    height: 100%;
+    width: 50vw;
+}
+
+.container .card{
+    border-radius: 5px;
+    background-color: #ffff;
+    
+}
+
+.container .card .top {
+    padding: 15px;
+}
+
+.container .card .top .state{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px;
+}
+
+.container .card .top .state span{
+    background-color:rgb(245, 210, 145);
+    color: rgb(163, 106, 0);
+    padding: 5px;
+    border-radius:4px
+}
+
+.container .card .top .word{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.container .card .top .definition{
+    width: 100%;
+    margin: 10px 0px;
+}
+
+
+.container .card .top .example{
+    width: 100%;
+    font-style:italic;
+}
+
+.container .card .buttons{
+    display: flex;
+    flex-direction: column;
+}
+
+.container .card .buttons .button{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    cursor:pointer;
+}
+
+.container .card .buttons .button.true{
+    background-color:rgb(147 173 147);
+    color:rgb(42, 100, 42);
+}
+.button:hover{
+    font-size: 102%;
+}
+
+.container .card .buttons .button.false{
+    background-color:rgb(218, 167, 167);
+    color:rgb(177 26 26)
+    
+}
