@@ -2,6 +2,9 @@
     box-sizing: border-box;
     margin: 0;
 }
+html{
+    font-size: 160%;
+}
 
 .main{
     align-items: center;
@@ -19,11 +22,11 @@
 .container .card{
     border-radius: 5px;
     background-color: #ffff;
-    
 }
 
 .container .card .top {
     padding: 15px;
+    margin: 50px 10px;
 }
 
 .container .card .top .state{
@@ -49,12 +52,15 @@
 .container .card .top .definition{
     width: 100%;
     margin: 10px 0px;
+    font-size: 30px;
 }
 
 
 .container .card .top .example{
     width: 100%;
     font-style:italic;
+    font-size: 30px;
+    /* max-width: 1600px; */
 }
 
 .container .card .buttons{
@@ -68,6 +74,7 @@
     justify-content: center;
     padding: 20px;
     cursor:pointer;
+    /* font-size: 30px; */
 }
 
 .container .card .buttons .button.true{
@@ -76,10 +83,27 @@
 }
 .button:hover{
     font-size: 102%;
+    border:.5px solid white;
 }
 
 .container .card .buttons .button.false{
     background-color:rgb(218, 167, 167);
     color:rgb(177 26 26)
     
+}
+
+
+/* Responsiveness */
+@media(max-width:1050px){
+    .container{
+        width: 80vw;
+    }
+
+}
+
+@media(max-width:650px){
+    .container{
+        width: 90vw;
+    }
+
 }
