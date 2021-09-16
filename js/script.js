@@ -113,6 +113,8 @@ function RunDictionary(){
     }
 }
 
+//P0008521972
+
 trueBtn.addEventListener('click',()=>{
     if(current_array === 0){
         DW1.push(CW1[current_number]);
