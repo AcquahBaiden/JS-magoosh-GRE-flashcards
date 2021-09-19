@@ -19,27 +19,36 @@ class Word {
         console.log('inside knows');
         if(this.state == 'learning' && (this.count == 0 || !this.count)){
             this.state = 'done';
-            return true;
+            return;
         }
         if(this.state == 'reviewing' && this.count == 2){
             this.state = 'done';
-            return true;
+            return;
         }
         if(this.state == 'reviewing' && this.count <2){
             ++this.count;
-            return false;
+            return;
+        }
+        if(this.state == 'learning' && this.count>0){
+            ++this.count
         }
     } 
 
     doesntKnowWord(){
-        if((this.state == 'done' || this.state == 'reviewing')){
-            this.state = 'reviewing';
-            if(this.count > 0){
-                --this.count
-            }else{
-                this.count = 0;
-            }
+        if(this.state == 'learning'){
+            --this.count;
+            return
         }
+        if(this.state == 'reviewing'){
+            --this.count;
+            return
+        }
+        if(this.state == 'done'){
+            this.state = 'reviewing';
+            this.count = 0;
+            return
+        }
+        
     }
 }
 

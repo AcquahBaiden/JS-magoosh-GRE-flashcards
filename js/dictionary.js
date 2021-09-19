@@ -1,4 +1,4 @@
-const CW1 = [
+export const CW1 = [
     {
         'word':'disinterested',
         'type': 'adjective',

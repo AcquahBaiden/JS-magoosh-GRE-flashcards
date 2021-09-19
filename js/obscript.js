@@ -1,83 +1,87 @@
 //import array of words
 import Word from './word.js';
-//create array of learning
-//create array of learned
-//get document object for display inside a display function
-const anchor = document.getElementById('wordInfo');
-const trueBtn = document.getElementById('true');
-const falseBtn = document.getElementById('false');
-//loop and add each as object
+import {CW1} from './dictionary.js'
+const anchor = document.querySelector('.container');
+const card = document.createElement('div');
+    card.classList.add('card');
+
 
 //Object methods
 //1. 
 let currentWord;
 const RW1 = [];
 const DW1=[];
-const CW1 = [ {
-    'word':'disinterested',
-    'type': 'adjective',
-    'meaning': 'unbiased; neutral',
-    'example': `The potential juror knew the defendant, and therefore could not servce on the jury,
-     which must consist only of <strong>disinterested</strong> members`,
-    'state':'learning'
-},
-{
-    'word':'maintain',
-    'type': 'verb',
-    'meaning': 'to assert',
-    'example': `The scientist <strong>maintained</strong> that the extinction of dinosaurs was most likley brought about by a drastic change in climate`,
-    'state':'learning'
-},
-{
-    'word':'upbraid',
-    'type': 'verb',
-    'meaning': 'to reproach; to scold',
-    'example':`Bob took a risk walking into the "Students Barbershop"-in the end he had to <strong>upbraid</strong> the apparently
-    drunk baber for giving him an uneven bow cut`,
-    'state':'learning'
-},
-{
-    'word':'qualify',
-    'type': 'verb',
-    'meaning': 'unbiased; neutral',
-    'example':`Chris <strong>qualified</strong> his love for San Francisco, adding he didn't like the weather there as much as he liked the weather in 
-    Los Angeles`,
-    'state':'learning'
-},
-{
-    'word':'iconoclast',
-    'type': 'noun',
-    'meaning': 'somebody who attacks cherished beliefs or institutions',
-    'example':`Lady Gaga, in challenging what it means to be clothed, is an <strong>iconoclast</strong>for wearing a "meat dress" to a prominent awards show`,
-    'state':'learning'
-},
-{
-    'word':'vapid',
-    'type': 'adjective',
-    'meaning': 'offering nothing that is stimulating or challenging',
-    'example':`Elliot was surprised when she called him <strong>vapid</strong>. He had always thought of himself as ingenious. `,
-    'state':'learning'
-},]
 
 const displayWord = function (selectedWordObj) {
-  anchor.innerHTML = `
-    <div class="state">
-        <span>${selectedWordObj.state}</span>
-    </div>
-     <div class="word">
-        <h1>${selectedWordObj.word}</h1>
-     </div>
-        <div class="definition"><strong class="type">${
-          selectedWordObj.type
-        }</strong>: ${selectedWordObj.meaning}</div>
+  card.innerHTML = `
+     <div class="top">
+        <div class="state">
+            <span>${selectedWordObj.state}</span>
+        </div>
+        <div class="word">
+            <h1>${selectedWordObj.word}</h1>
+        </div>
+            <div class="definition">
+                <strong class="type">${selectedWordObj.type}
+                </strong>: ${selectedWordObj.meaning}
+            </div>
             <div class="example">
                 ${selectedWordObj.example}
+            </div>
+        </div>
+        <div class="buttons">
+            <div class="button true" id="true" onclick=""> <span>I knew this word</span> </div>
+            <div class="button false" id="false" onclick=""> <span>I didn't know this word</span> </div>
         </div>
 `;
+    const knowBtn = card.querySelector('.button.true');
+    const knowsNotBtn = card.querySelector('.button.false');
+
+    knowBtn.addEventListener('click',()=>{
+        responseHandler(true);
+    });
+    knowsNotBtn.addEventListener('click',()=>{
+        responseHandler(false)});
+
+    return card;
 };
 
-function getNextWord(){
-    //Math.floor(Math.random() * (max - min) ) + min;
+function responseHandler(response){
+    if(response){
+        currentWord.knowsWord();
+        if(currentWord.state == 'learning' && currentWord.count == 0){
+            DW1.push(currentWord);
+        }
+        if(currentWord.state == 'learning' && currentWord.count == 1){
+            CW1.push(currentWord);
+        }
+        if(currentWord.state == 'reviewing' && currentWord.count <2){
+            RW1.push(currentWord);
+        }
+        if(currentWord.state == 'done'){
+            DW1.push(currentWord);
+        }
+    }else{
+        currentWord.doesntKnowWord();
+        switch (currentWord.state) {
+            case 'done':
+                DW1.push(currentWord);
+                break;
+            case 'reviewing':
+                RW1.push(currentWord);
+                break;
+            case 'learning':
+                CW1.push(currentWord);
+                break;
+            default:
+                break;
+        }
+    }
+    
+    getNextWord(displayWord); 
+}
+
+function getNextWord(callback){
     if(CW1.length!=0){
         currentWord = CW1[Math.floor(Math.random()*(CW1.length - 0))+0];
         const currentWordIndex = CW1.indexOf(currentWord);
@@ -88,9 +92,12 @@ function getNextWord(){
         console.log('CW1:',CW1);
         console.log('RW1:',RW1);
         console.log('DW1:',DW1);
-        displayWord(currentWord);
+        const card = callback(currentWord);
+        anchor.append(card);
     }
 }
+
+
 (function () {
     CW1.forEach((word,idx) => {
       CW1[idx] = new Word(
@@ -102,15 +109,6 @@ function getNextWord(){
         0
       );
     });
-    getNextWord()
+    getNextWord(displayWord)
   })();
 
-  trueBtn.addEventListener('click',()=>{
-      if(currentWord.knowsWord){
-         DW1.push(currentWord);
-      }else{
-         CW1.push(currentWord);
-      }
-      getNextWord();
-      
-});
